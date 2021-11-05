@@ -1,7 +1,14 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
+import initDbConnection from './configs/database';
+import appRoutes from './routes';
 
 const app = express();
+dotenv.config();
 
-app.get('/api', (req, res) => res.json({ message: 'TCHAUU!!!!! :-)' }));
+initDbConnection();
 
-app.listen(5000, () => console.log('App running on PORT 5000'));
+app.use('/api', appRoutes);
+
+app.listen(process.env.PORT, () => console.log(`App running on PORT ${process.env.PORT}`));
