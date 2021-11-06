@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 
     res.json(projects);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
 
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res, next) => {
 
     res.json(project);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
 

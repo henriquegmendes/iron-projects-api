@@ -1,3 +1,7 @@
+import mongoose from 'mongoose';
+
+import InvalidIdException from '../exceptions/InvalidIdException';
+
 class ProjectsRepository {
   constructor(model) {
     this.projectModel = model;
@@ -10,10 +14,11 @@ class ProjectsRepository {
   }
 
   async getOne(id) {
-    console.log(id);
-    const project = await this.projectModel.findById(id);
+    if (!mongoose.isValidObjectId(id)) {
+      throw new InvalidIdException();
+    }
 
-    console.log(project);
+    const project = await this.projectModel.findById(id);
 
     return project;
   }

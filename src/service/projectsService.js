@@ -10,7 +10,6 @@ class ProjectsService {
   }
 
   async getOne(id) {
-    console.log(id);
     // CONTRATO: PRECISO DE UM METODO QUE RECEBA UM ID E RETORNE UM PROJETO
     const project = await this.projectsRepository.getOne(id);
 
