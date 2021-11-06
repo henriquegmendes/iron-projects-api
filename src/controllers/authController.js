@@ -12,18 +12,24 @@ const authService = new AuthService(authRepository);
 
 router.post('/register', async (req, res, next) => {
   try {
-    const newUser = await authService.register(req.body);
+    const { body } = req;
+
+    const newUser = await authService.register(body);
 
     res.json(newUser);
-    // lógica para receber os dados de cadastro, validá-los e por fim guardar os dados no banco
   } catch (error) {
     next(error);
   }
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   try {
-    // lógica para receber email + senha do user e valida-os para então devolver um ACCESS TOKEN
+    // Receber o request e pegar somente o que será útil (req.body)
+    const { body } = req;
+    // Chamar o service passando o body para que ele aplique as regras de negócio
+    const tokenReponse = await authService.authenticate(body);
+    // Dar um response devolvendo o token para o usuário que a requisitou
+    res.json(tokenReponse);
   } catch (error) {
     next(error);
   }

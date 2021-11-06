@@ -1,9 +1,9 @@
 class InvalidBodyRequestException extends Error {
-  constructor() {
+  constructor(message) {
     super();
 
-    this.status = 504;
-    this.message = 'Invalid Body Request';
+    this.status = 400;
+    this.message = message;
   }
 }
 

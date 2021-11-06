@@ -4,12 +4,16 @@ class AuthRepository {
   }
 
   async register(body) {
-    // Criar um novo modelo de user
-    // Salvar o user no banco
+    // Criar um novo modelo de user + salvando no banco
+    const newUser = await this.authModel.create(body);
+
+    return newUser;
   }
 
-  async authenticate() {
+  async findUserByEmail(email) {
+    const user = await this.authModel.findOne({ email });
 
+    return user;
   }
 }
 
