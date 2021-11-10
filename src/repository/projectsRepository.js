@@ -7,8 +7,11 @@ class ProjectsRepository {
     this.projectModel = model;
   }
 
-  async getAll(title) {
-    const projects = await this.projectModel.find({ title: { $regex: new RegExp(title, 'i') } });
+  async getAll(title, userId) {
+    const projects = await this.projectModel.find({
+      title: { $regex: new RegExp(title, 'i') },
+      owner: userId,
+    });
 
     return projects;
   }
@@ -21,6 +24,12 @@ class ProjectsRepository {
     const project = await this.projectModel.findById(id);
 
     return project;
+  }
+
+  async create(body, userId) {
+    const newProject = await this.projectModel.create({ ...body, owner: userId });
+
+    return newProject;
   }
 }
 

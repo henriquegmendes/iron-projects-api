@@ -19,15 +19,20 @@ router.use((req, res, next) => {
 
   // Se foi passado este header
   if (!bearerToken) {
-    return next(new NotAuthenticatedException());
+    return next(new NotAuthenticatedException('Missing Token'));
   }
 
   // validar o token
-  // const tokenPayload = jwt.verify();
+  const token = bearerToken.slice(7);
 
-  console.log('TOKENNNNNN', bearerToken);
+  try {
+    const tokenPayload = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.user = { id: tokenPayload.id, role: tokenPayload.role };
 
-  return next(new NotAuthenticatedException());
+    return next();
+  } catch (error) {
+    return next(new NotAuthenticatedException('Token invalid or expired'));
+  }
 });
 
 // Rotas Privadas

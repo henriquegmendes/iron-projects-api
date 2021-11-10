@@ -17,7 +17,9 @@ router.get('/', async (req, res, next) => {
   try {
     const { title } = req.query;
 
-    const projects = await projectsService.getAllByFilter(title);
+    console.log('REQ.USER', req.user);
+
+    const projects = await projectsService.getAllByFilter(title, req.user.id);
 
     res.json(projects);
   } catch (error) {
@@ -29,9 +31,23 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
 
+    console.log('REQ.USER NA ROTA DE DETALHE', req.user);
+
     const project = await projectsService.getOne(id);
 
     res.json(project);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const { body } = req;
+
+    const newProject = await projectsService.create(body, req.user.id);
+
+    res.json(newProject);
   } catch (error) {
     next(error);
   }

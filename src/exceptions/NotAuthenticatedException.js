@@ -1,9 +1,9 @@
 class NotAuthenticatedException extends Error {
-  constructor() {
+  constructor(message) {
     super();
 
     this.status = 401;
-    this.message = 'Not Authorized';
+    this.message = message;
   }
 }
 
