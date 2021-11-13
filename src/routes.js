@@ -10,7 +10,7 @@ import NotAuthenticatedException from './exceptions/NotAuthenticatedException';
 const router = Router();
 
 // Rotas Públicas
-router.use('/auth', authController);// /api/auth
+router.use('/auth', authController); // /api/auth
 
 // Criar AQUI um middleware que verifica as credenciais do nosso user
 router.use((req, res, next) => {

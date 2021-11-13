@@ -21,7 +21,7 @@ class ProjectsRepository {
       throw new InvalidIdException();
     }
 
-    const project = await this.projectModel.findById(id);
+    const project = await this.projectModel.findById(id).populate('tasks');
 
     return project;
   }
@@ -30,6 +30,10 @@ class ProjectsRepository {
     const newProject = await this.projectModel.create({ ...body, owner: userId });
 
     return newProject;
+  }
+
+  async insertTaskId(projectId, taskId) {
+    await this.projectModel.findByIdAndUpdate(projectId, { $push: { tasks: taskId } });
   }
 }
 
